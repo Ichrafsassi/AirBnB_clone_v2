@@ -66,6 +66,7 @@ class DBStorage:
 
     def reload(self):
         """Reloading session"""
+	
         Base.metadata.create_all(self.__engine)
         sec = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sec)
@@ -74,3 +75,6 @@ class DBStorage:
     def close(self):
         """Close"""
         self.__session.close()
+
+    def get_cities (self, state_id):   
+    return self.__session.query(City).filter(City.state_id == state_id).all()
